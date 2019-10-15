@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using FrameGrabberSimulator.Configuration;
 
 namespace FrameGrabberSimulator
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            FrameGrabberSimulator frameGrabberSimulator = new FrameGrabberSimulator();
-            Configuration.Configuration configuration = new Configuration.Configuration(); //TODO This is redundant since you are assigning it with the xmlreader anyway. 
-            
-            XmlReader xml = new XmlReader();
-            
-           configuration = xml.ReadFile();
+            var configuration = GetConfiguration();
 
-            frameGrabberSimulator.Begin(configuration);
+            FileCopier fileCopier = new FileCopier(configuration.FrameGrabberSettings);
 
+            FrameGrabberSimulator frameGrabberSimulator = new FrameGrabberSimulator(fileCopier);
+
+            frameGrabberSimulator.Begin(configuration.DirectorySettings);
+        }
+
+        private static FrameGrabberConfiguration GetConfiguration()
+        {
+            ConfigurationReader configurationReader = new ConfigurationReader();
+            return configurationReader.LoadConfiguration();
         }
 
 

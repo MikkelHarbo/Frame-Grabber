@@ -37,6 +37,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Configuration.cs" />
-    <Compile Include="Configuration\XmlReader.cs" />
+    <Compile Include="Configuration\DirectorySettings.cs" />
+    <Compile Include="Configuration\FrameGrabberConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationReader.cs" />
+    <Compile Include="Configuration\FrameGrabberSettings.cs" />
     <Compile Include="FrameGrabberSimulator.cs" />
     <Compile Include="FileCopier.cs" />
     <Compile Include="FolderCreater.cs" />
@@ -56,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="FrameGrabberSimulator.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
