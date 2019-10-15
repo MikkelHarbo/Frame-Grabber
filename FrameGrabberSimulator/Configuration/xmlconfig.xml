@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<SourcePath>C:\\Users\mikke\\OneDrive - Aarhus universitet\\AU\\ST\\7.Semester\\Bachelor\\Programmering - Test\\DataTranferStub\\CBCT\\Acquisitions\\746879825.xim</SourcePath>
+    <BaseTargetPath>C:\\Users\\mikke\\OneDrive - Aarhus universitet\\AU\ST\\7.Semester\\Bachelor\\Programmering - Test\\DataTranferStub\\Hub\\</BaseTargetPath>
+    <Amount>100</Amount>
+    <StartingProjection>0</StartingProjection>
+    <FrequencyHertz>10</FrequencyHertz>
+</Configuration>
+

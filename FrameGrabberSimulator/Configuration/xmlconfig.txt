@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Configuration>
+  <TargetSpecification>
+    <SourcePath>C:\\Users\\mikke\\OneDrive - Aarhus universitet\\AU\\ST\\7.Semester\\Bachelor\\Programmering - Test\\DataTranferStub\\CBCT\\Acquisitions\\746879825</SourcePath>
+    <BaseTargetPath>C:\\Users\\mikke\\OneDrive - Aarhus universitet\\AU\ST\\7.Semester\\Bachelor\\Programmering - Test\\DataTranferStub\\Hub\\</BaseTargetPath>
+  </TargetSpecification>
+  <ImportSpecification>
+    <Amount>100</Amount>
+    <StartingProjection>0</StartingProjection>
+    <FrequencyHertz>10</FrequencyHertz>
+  </ImportSpecification>
+</Configuration>
+
