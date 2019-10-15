@@ -11,7 +11,7 @@ namespace FrameGrabberSimulator
         static void Main(string[] args)
         {
             FrameGrabberSimulator frameGrabberSimulator = new FrameGrabberSimulator();
-            Configuration.Configuration configuration = new Configuration.Configuration();
+            Configuration.Configuration configuration = new Configuration.Configuration(); //TODO This is redundant since you are assigning it with the xmlreader anyway. 
             
             XmlReader xml = new XmlReader();
             

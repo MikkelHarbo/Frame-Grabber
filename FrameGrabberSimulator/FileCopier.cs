@@ -6,6 +6,7 @@ namespace FrameGrabberSimulator
 {
     class FileCopier
     {
+        //TODO Why are these properties and not private fields?
         public int AmountOfProjections { get; }
         public int Frequency { get; }
 
@@ -14,14 +15,19 @@ namespace FrameGrabberSimulator
             AmountOfProjections = amountOfProjections;
             Frequency = frequency;
         }
+
+        //TODO Naming: CopyFiles instead? InputFiles could be a noun. 
         public void InputFiles(string sourceDir, string targetDir)
         {
-            var filetype = "*.xim";
+            //TODO: Naming: fileType
+            var filetype = "*.xim"; //TODO Avoid hardcoded strings - Please extract this to a constant - Or consider loading it via the configuration. 
             Directory.CreateDirectory(targetDir);
             string[] files = Directory.GetFiles(sourceDir, filetype);
 
+            
             for (int i = 0; i < AmountOfProjections; i++)
             {
+                //TODO You could extract this if and else into a method called SimulateProjectionCreation or something. 
                 if (i < 0.25 * AmountOfProjections || i > 0.75 * AmountOfProjections)
                 {
                     Thread.Sleep(1000 / CalculationOfFrequency(Frequency*0.5));
@@ -37,8 +43,11 @@ namespace FrameGrabberSimulator
 
         }
 
+        //TODO Why is this public?
+        //TODO Naming: CalculateFrequency and the parameter: maxFrequency
         public int CalculationOfFrequency(double freqeuncy)
         {
+            //TODO This seems a bit weird. Why not just pass a integer and then check if it is 0?
             if (freqeuncy % 1 != 0)
             {
                var newFrequency = Math.Round((double) freqeuncy, 0, MidpointRounding.AwayFromZero);
