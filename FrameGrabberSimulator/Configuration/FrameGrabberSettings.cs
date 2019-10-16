@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace FrameGrabberSimulator.Configuration
+﻿namespace FrameGrabberSimulator.Configuration
 {
     public class FrameGrabberSettings
     {
-        public FrameGrabberSettings(string fileType, int frequency, int startingProjection, int amount,string mode)
+        public FrameGrabberSettings(string fileType, int frequency, int startingProjection, int amount, string mode)
         {
             FileType = fileType;
             Frequency = frequency;

@@ -14,7 +14,6 @@ namespace FrameGrabberSimulator
 
             frameGrabberSimulator.Begin(configuration.DirectorySettings);
         }
-
         private static FrameGrabberConfiguration GetConfiguration()
         {
             var configurationReader = new ConfigurationReader();

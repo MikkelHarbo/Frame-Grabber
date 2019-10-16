@@ -58,8 +58,12 @@
     <Compile Include="Configuration\FrameGrabberSettings.cs" />
     <Compile Include="FrameGrabberSimulator.cs" />
     <Compile Include="FileCopier.cs" />
+    <Compile Include="ProjectionCreationSimulation\IProjectionCreationSimulator.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectionCreationSimulation\ProjectionCreationSimulator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProjectionCreationSimulation\SimpleProjectionCreationSimulator.cs" />
+    <Compile Include="ProjectionCreationSimulation\SimulatorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

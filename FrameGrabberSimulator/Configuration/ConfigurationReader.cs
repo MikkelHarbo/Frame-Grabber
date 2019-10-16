@@ -15,7 +15,7 @@ namespace FrameGrabberSimulator.Configuration
             var frequency = Convert.ToInt32(ConfigurationManager.AppSettings["Frequency"]);
             var mode = ConfigurationManager.AppSettings["Mode"];
 
-            FrameGrabberSettings frameGrabberSettings = new FrameGrabberSettings(fileType, frequency, startingProjection, amount,mode);
+            FrameGrabberSettings frameGrabberSettings = new FrameGrabberSettings(fileType, frequency, startingProjection, amount, mode);
             DirectorySettings directorySettings = new DirectorySettings(baseTargetPath, sourcePath);
 
             return new FrameGrabberConfiguration(directorySettings, frameGrabberSettings);
