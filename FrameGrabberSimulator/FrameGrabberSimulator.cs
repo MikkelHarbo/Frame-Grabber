@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using FrameGrabberSimulator.Configuration;
 
 namespace FrameGrabberSimulator
 {
     class FrameGrabberSimulator
     {
-        private FileCopier _fileCopier;
+        private readonly FileCopier _fileCopier;
 
         public FrameGrabberSimulator(FileCopier fileCopier)
         {
@@ -56,6 +54,5 @@ namespace FrameGrabberSimulator
         {
             _fileCopier.CopyFiles(sourcePath, targetPath);
         }
-
     }
 }
