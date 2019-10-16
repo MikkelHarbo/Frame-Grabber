@@ -46,7 +46,6 @@ namespace FrameGrabberSimulator
                     Console.WriteLine("Folder already exists, try a new name");
                 }
             } while (!exists);
-
             return Path.Combine(baseTargetPath, folderName);
         }
 

@@ -14,6 +14,8 @@ namespace FrameGrabberSimulator
         private readonly int _startProjection;
         private readonly string _fileType;
         private readonly List<int> _normalDistribution;
+        private readonly string _modeSettings;
+        private readonly string _mode = "NormalDistribution";
 
         public FileCopier(FrameGrabberSettings frameGrabberSettings)
         {
@@ -22,7 +24,20 @@ namespace FrameGrabberSimulator
             _startProjection = frameGrabberSettings.StartingProjection;
             _fileType = frameGrabberSettings.FileType;
             _normalDistribution = CreateNormalDistributedList(_amountOfProjections, _frequency);
+            _modeSettings = frameGrabberSettings.Mode;
+        }
 
+        public void CopyFiles(string sourceDir, string targetDir)
+        {
+            Directory.CreateDirectory(targetDir);
+            string[] files = Directory.GetFiles(sourceDir, _fileType);
+
+            for (int i = _startProjection; i < _amountOfProjections; i++)
+            {
+                SimulateProjectionCreation(i);
+                File.Copy(files[i], Path.Combine(targetDir, Path.GetFileName(files[i]) ?? throw new InvalidOperationException()));
+                Console.WriteLine(Path.GetFileName(files[i]));
+            }
         }
 
         private List<int> CreateNormalDistributedList(int amount, int mean)
@@ -45,19 +60,18 @@ namespace FrameGrabberSimulator
                 var value = normal.Sample() - 1;
                 rawNormalDistribution.Add(value);
             }
-
             return rawNormalDistribution;
         }
 
         private void ModifyOutliers(List<double> sortedDistribution)
         {
-            for (int i = 0; i < sortedDistribution.Count - 1; i++)
+            for (int i = 0; i < sortedDistribution.Count; i++)
             {
-                if (i == 0 && IsOutlier(sortedDistribution[i]-1))
+                if (i == 0)
                 {
-                    sortedDistribution[i] = -1;
+                    sortedDistribution[i] = -0.99;
                 }
-                else if (IsOutlier(sortedDistribution[i]-1))
+                else if (IsOutlier(sortedDistribution[i]))
                 {
                     sortedDistribution[i] = sortedDistribution[i - 1];
                 }
@@ -66,50 +80,30 @@ namespace FrameGrabberSimulator
 
         private bool IsOutlier(double value)
         {
-            return value < -1;
+            return value < -1 || value > 1;
         }
 
         private List<int> CreateNormalDistributedDelayList(List<double> distribution, int mean)
         {
             List<int> delayList = new List<int>();
-
             foreach (var value in distribution)
             {
                 var newValue = mean - Math.Abs(value * mean);
                 delayList.Add((int)Math.Round(1000 / newValue));
             }
-
             return delayList;
         }
 
-
-        public void CopyFiles(string sourceDir, string targetDir)
+        private void SimulateProjectionCreation(int i)
         {
-            Directory.CreateDirectory(targetDir);
-            string[] files = Directory.GetFiles(sourceDir, _fileType);
-
-            for (int i = _startProjection; i < _amountOfProjections; i++)
+            if (_modeSettings == _mode)
             {
-                SimulateProjectionCreation(i, files, targetDir);
-                File.Copy(files[i], Path.Combine(targetDir, Path.GetFileName(files[i]) ?? throw new InvalidOperationException()));
-                Console.WriteLine(Path.GetFileName(files[i]));
+                Thread.Sleep(_normalDistribution[i]);
             }
-        }
-
-        public void SimulateProjectionCreation(int i, string[] files, string targetDir)
-        {
-            Thread.Sleep(_normalDistribution[i]);
-        }
-
-        private int CalculateFrequency(double maxFrequency)
-        {
-            if (Math.Abs(maxFrequency) < 0)
+            else
             {
-                var newFrequency = Math.Round((double)maxFrequency, 0, MidpointRounding.AwayFromZero);
-                return (int)newFrequency;
+                Thread.Sleep(1000/_frequency);
             }
-
-            return (int)maxFrequency;
         }
     }
 }
