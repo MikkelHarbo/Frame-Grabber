@@ -1,52 +1,38 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
+using FrameGrabberSimulator.Configuration;
+using FrameGrabberSimulator.ProjectionCreationSimulation;
 
 namespace FrameGrabberSimulator
 {
     class FileCopier
     {
-        public int AmountOfProjections { get; }
-        public int Frequency { get; }
+        private readonly int _amountOfProjections;
+        private readonly int _startProjection;
+        private readonly string _fileType;
+        private readonly IProjectionCreationSimulator _simulator;
 
-        public FileCopier(int amountOfProjections, int frequency)
+        public FileCopier(FrameGrabberSettings frameGrabberSettings)
         {
-            AmountOfProjections = amountOfProjections;
-            Frequency = frequency;
+            _simulator = SimulatorFactory.CreateSimulator(frameGrabberSettings.Mode, frameGrabberSettings.Amount,
+                frameGrabberSettings.Frequency);
+            _amountOfProjections = frameGrabberSettings.Amount;
+            _startProjection = frameGrabberSettings.StartingProjection;
+            _fileType = frameGrabberSettings.FileType;
         }
-        public void InputFiles(string sourceDir, string targetDir)
-        {
-            var filetype = "*.xim";
-            Directory.CreateDirectory(targetDir);
-            string[] files = Directory.GetFiles(sourceDir, filetype);
 
-            for (int i = 0; i < AmountOfProjections; i++)
+        public void CopyFiles(string sourceDir, string targetDir)
+        {
+            Directory.CreateDirectory(targetDir);
+            string[] files = Directory.GetFiles(sourceDir, _fileType);
+
+            for (int i = _startProjection; i < _amountOfProjections; i++)
             {
-                if (i < 0.25 * AmountOfProjections || i > 0.75 * AmountOfProjections)
-                {
-                    Thread.Sleep(1000 / CalculationOfFrequency(Frequency*0.5));
-                }
-                else 
-                {
-                    Thread.Sleep(1000 / Frequency);
-                }
-                
+                _simulator.SimulateProjectionCreation();
                 File.Copy(files[i], Path.Combine(targetDir, Path.GetFileName(files[i]) ?? throw new InvalidOperationException()));
                 Console.WriteLine(Path.GetFileName(files[i]));
             }
-
         }
-
-        public int CalculationOfFrequency(double freqeuncy)
-        {
-            if (freqeuncy % 1 != 0)
-            {
-               var newFrequency = Math.Round((double) freqeuncy, 0, MidpointRounding.AwayFromZero);
-               return (int) newFrequency;
-            }
-
-            return (int) freqeuncy;
-        }
-
     }
 }
+

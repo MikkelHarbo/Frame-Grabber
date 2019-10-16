@@ -1,33 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using FrameGrabberSimulator.Configuration;
 
 namespace FrameGrabberSimulator
 {
     class FrameGrabberSimulator
     {
+        private readonly FileCopier _fileCopier;
 
-        FolderCreater folderCreater = new FolderCreater();
-
-        public void Begin(Configuration.Configuration configuration)
+        public FrameGrabberSimulator(FileCopier fileCopier)
         {
-            var baseTargetPath = configuration.BaseTargetPath;
-
-            var sourcePath = configuration.SourcePath;
-
-            Console.WriteLine("Type in the name of folder that will be created");
-
-            var targetPath = CreateFolder(baseTargetPath);
-
-            folderCreater.CreateFolder(targetPath);
-
-            CopyFiles(sourcePath, targetPath,configuration);
-
+            _fileCopier = fileCopier;
         }
 
-        private string CreateFolder(string baseTargetPath)
+        public void Begin(DirectorySettings directorySettings)
         {
+            var baseTargetPath = directorySettings.BaseTargetPath;
+
+            var targetPath = CreateTargetPathFromUserInput(baseTargetPath);
+
+            Directory.CreateDirectory(targetPath);
+
+            CopyFiles(directorySettings.SourcePath, targetPath);
+        }
+
+        private string CreateTargetPathFromUserInput(string baseTargetPath)
+        {
+            Console.WriteLine("Type in the name of folder that will be created");
+
             bool exists = false;
 
             var folderName = "";
@@ -46,20 +46,12 @@ namespace FrameGrabberSimulator
                     Console.WriteLine("Folder already exists, try a new name");
                 }
             } while (!exists);
-
             return Path.Combine(baseTargetPath, folderName);
         }
 
-        private void CopyFiles(string sourcePath,string targetPath,Configuration.Configuration configuration)
+        private void CopyFiles(string sourcePath, string targetPath)
         {
-            int frequenzy = configuration.Frequency;
-
-            int amount = configuration.Amount;
-
-            FileCopier fileCopier = new FileCopier(amount, frequenzy);
-
-            fileCopier.InputFiles(sourcePath, targetPath);
+            _fileCopier.CopyFiles(sourcePath, targetPath);
         }
-
     }
 }

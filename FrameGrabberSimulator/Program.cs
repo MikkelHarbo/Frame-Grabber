@@ -1,26 +1,23 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using FrameGrabberSimulator.Configuration;
+﻿using FrameGrabberSimulator.Configuration;
 
 namespace FrameGrabberSimulator
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            FrameGrabberSimulator frameGrabberSimulator = new FrameGrabberSimulator();
-            Configuration.Configuration configuration = new Configuration.Configuration();
-            
-            XmlReader xml = new XmlReader();
-            
-           configuration = xml.ReadFile();
+            var configuration = GetConfiguration();
 
-            frameGrabberSimulator.Begin(configuration);
+            var fileCopier = new FileCopier(configuration.FrameGrabberSettings);
 
+            var frameGrabberSimulator = new FrameGrabberSimulator(fileCopier);
+
+            frameGrabberSimulator.Begin(configuration.DirectorySettings);
         }
-
-
+        private static FrameGrabberConfiguration GetConfiguration()
+        {
+            var configurationReader = new ConfigurationReader();
+            return configurationReader.LoadConfiguration();
+        }
     }
 }
