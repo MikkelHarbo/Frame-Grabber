@@ -56,7 +56,8 @@
     <Compile Include="Configuration\FrameGrabberConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationReader.cs" />
     <Compile Include="Configuration\FrameGrabberSettings.cs" />
-    <Compile Include="FrameGrabberSimulator.cs" />
+    <Compile Include="FakeDataFrameGrabberSimulator.cs" />
+    <Compile Include="RealDataFrameGrabberSimulator.cs" />
     <Compile Include="FileCopier.cs" />
     <Compile Include="ProjectionCreationSimulation\IProjectionCreationSimulator.cs" />
     <Compile Include="Program.cs" />
