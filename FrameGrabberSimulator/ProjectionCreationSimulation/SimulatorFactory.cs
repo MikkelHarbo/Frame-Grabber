@@ -4,7 +4,7 @@
     {
         public static IProjectionCreationSimulator CreateSimulator(string mode, int amount, int frequency)
         {
-            if (mode == "NormalDistribution")
+            if (mode == "Normal")
             {
                 return new ProjectionCreationSimulator(amount, frequency);
             }

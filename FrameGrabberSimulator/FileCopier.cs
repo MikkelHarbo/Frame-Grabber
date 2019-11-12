@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Security.AccessControl;
 using FrameGrabberSimulator.Configuration;
 using FrameGrabberSimulator.ProjectionCreationSimulation;
+using MathNet.Numerics;
 
 namespace FrameGrabberSimulator
 {
@@ -24,13 +27,14 @@ namespace FrameGrabberSimulator
         public void CopyFiles(string sourceDir, string targetDir)
         {
             Directory.CreateDirectory(targetDir);
-            string[] files = Directory.GetFiles(sourceDir, _fileType);
+            var info = new DirectoryInfo(sourceDir);
+            var files = info.GetFiles().OrderBy(p => p.CreationTime).ToArray();
 
-            for (int i = _startProjection; i < _amountOfProjections; i++)
+            for (var i = _startProjection; i < _amountOfProjections; i++)
             {
                 _simulator.SimulateProjectionCreation();
-                File.Copy(files[i], Path.Combine(targetDir, Path.GetFileName(files[i]) ?? throw new InvalidOperationException()));
-                Console.WriteLine(Path.GetFileName(files[i]));
+                File.Copy(files[i].DirectoryName +"/"+ files[i].Name, Path.Combine(targetDir, Path.GetFileName(files[i].Name)), true);
+                Console.WriteLine(Path.GetFileName(files[i].Name));
             }
         }
     }
