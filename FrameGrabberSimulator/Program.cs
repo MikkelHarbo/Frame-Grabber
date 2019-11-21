@@ -13,6 +13,8 @@ namespace FrameGrabberSimulator
             Console.WriteLine("[Esc] Exit application");
 
             HandleUserInput();
+
+            Console.ReadKey();
         }
 
         private static void HandleUserInput()
@@ -57,5 +59,9 @@ namespace FrameGrabberSimulator
             var configurationReader = new ConfigurationReader();
             return configurationReader.LoadConfiguration();
         }
+
+
     }
+
+
 }
